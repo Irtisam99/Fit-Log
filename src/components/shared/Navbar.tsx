@@ -90,24 +90,25 @@ const Navbar = () => {
 
                 {/* Right section */}
                 <div className="navbar-end gap-4">
-                    <button className="flex justify-center items-center gap-2">
+                    <Link href='/myPlan' className="flex justify-center items-center gap-2">
                         <span className='text-white'>Plan</span>
-                        <div className='bg-[#C2F800] px-2 py-0.5 rounded-4xl'>
+                        <div className='bg-[#C2F800] px-2 py-0.5 rounded-full'>
                             0
                         </div>
-                    </button>
-                    <button className="flex justify-center items-center gap-2">
+                    </Link>
+                    <Link href='/myPlan' className="flex justify-center items-center gap-2">
                         <span className='text-white'>Saved</span>
-                        <div className='px-2 py-0.5 rounded-4xl border-2 border-[#2D313B] text-white font-bold'>
+                        <div className='px-2 py-0.5 rounded-full border-2 border-[#2D313B] text-white font-bold'>
                             0
                         </div>
-                    </button>
+                    </Link>
                 </div>
 
             </div>
             <div className="border-t border-gray-800"></div>
 
         </>
+
     );
 };
 
