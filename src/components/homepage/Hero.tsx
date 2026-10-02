@@ -7,15 +7,15 @@ const Hero = () => {
         <div className="bg-[#15171D] h-auto lg:h-[448px] container mx-auto mt-[48px] rounded-2xl">
             <div className="flex flex-col h-full items-center justify-center text-center lg:flex-row lg:items-stretch lg:text-left p-6 sm:p-8 lg:p-[56px]">
 
-                <div>
+                <div className=''>
                     <p className='text-[#C2F800] text-xs mb-4'>Workout Library</p>
 
-                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#FFFFFF]">
+                    <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold text-[#FFFFFF]">
                         TRAIN WITH INTENT. LOG <br className="hidden lg:block" />
                         EVERY SET.
                     </h1>
 
-                    <p className="py-6 text-[#9CA3AF] text-sm sm:text-base">
+                    <p className="py-6 text-[#9CA3AF] text-sm sm:text-base lg:text-[16px]">
                         FitLog is a dark, no-nonsense gym companion: pick a lift, lock it
                         into <br className="hidden lg:block" /> today's plan, and watch the week's work add up.
                     </p>

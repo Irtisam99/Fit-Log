@@ -9,8 +9,8 @@ const Navbar = () => {
     const pathname = usePathname()
     const items = (
         <>
-            <li className=''><Link href='/workouts' className={pathname === '/workouts' ? "text-[#C2F800] font-semibold bg-[#1A2312] rounded-2xl px-4 py-1.5" : "text-white"}>Workouts</Link></li>
-            <li className=''><Link href='/myPlan' className={pathname === '/myPlan' ? "text-[#C2F800] font-semibold bg-[#1A2312] rounded-2xl px-4 py-1.5" : "text-white"}>My Plan</Link></li>
+            <li className=''><Link href='/' className={pathname === '/' ? "text-[#C2F800] font-semibold bg-[#1A2312] rounded-2xl px-4 py-1" : "text-white"}>Workouts</Link></li>
+            <li className=''><Link href='/myPlan' className={pathname === '/myPlan' ? "text-[#C2F800] font-semibold bg-[#1A2312] rounded-2xl px-4 py-1" : "text-white"}>My Plan</Link></li>
         </>
     );
 
