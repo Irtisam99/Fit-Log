@@ -1,11 +1,18 @@
 import ScrollToTop from '@/components/ScrollToTop';
+import WorkoutActions from '@/components/WorkoutActions';
+import { FitLogContext } from '@/context/FitLogContext';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
+
+
+
+
 const getData = async () => {
     const datas = await fetch('https://api.abcz.workers.dev/api/fitlog')
     const data = await datas.json()
     return data
 }
+
 
 const WorkoutDetails = async ({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
@@ -27,6 +34,7 @@ const WorkoutDetails = async ({ params }: { params: Promise<{ id: string }> }) =
             </main>
         );
     }
+
     return (
         <>
             <ScrollToTop></ScrollToTop>
@@ -134,25 +142,8 @@ const WorkoutDetails = async ({ params }: { params: Promise<{ id: string }> }) =
                         </section>
 
                         {/* ================= BUTTONS ================= */}
-                        <div className="mt-7 flex flex-wrap gap-4">
-
-                            <button
-                                type="button"
-                                className="flex h-[30px] items-center gap-2 rounded-[7px] bg-[#CCFF00] px-4 py-5 text-[14px] font-bold text-black transition hover:bg-[#b8ed18ed]"
-                            >
-                                <span className="text-[12px]">▣</span>
-                                Add to today's plan
-                            </button>
-
-                            <button
-                                type="button"
-                                className="flex h-[30px] items-center gap-2 rounded-[7px] border-2 border-[#343842] bg-transparent px-4 py-5 text-[14px] font-medium text-[#d0d1d4] transition hover:bg-[#171a20]"
-                            >
-                                <span className="text-[11px]">♡</span>
-                                Save for later
-                            </button>
-
-                        </div>
+                            
+                            <WorkoutActions workout={exactData}></WorkoutActions>
                     </div>
                 </div>
             </div>

@@ -1,11 +1,18 @@
 'use client';
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 import logo from '@/assets/logo.png';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { FitLogContext } from '@/context/FitLogContext';
+
 
 const Navbar = () => {
+
+    const context = useContext(FitLogContext)
+
+
+
     const pathname = usePathname()
     const items = (
         <>
@@ -93,14 +100,12 @@ const Navbar = () => {
                     <Link href='/myPlan' className="flex justify-center items-center gap-2">
                         <span className='text-white'>Plan</span>
                         <div className='bg-[#C2F800] px-2 py-0.5 rounded-full'>
-                            0
-                        </div>
+                            {context ? (context.todayPlan.length > 0 ? context.todayPlan.length : 0) : 0}                        </div>
                     </Link>
                     <Link href='/myPlan' className="flex justify-center items-center gap-2">
                         <span className='text-white'>Saved</span>
                         <div className='px-2 py-0.5 rounded-full border-2 border-[#2D313B] text-white font-bold'>
-                            0
-                        </div>
+                            {context ? (context.savedWorkouts.length > 0 ? context.savedWorkouts.length : 0) : 0}                        </div>
                     </Link>
                 </div>
 
