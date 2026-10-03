@@ -1,6 +1,25 @@
-import React from "react";
+'use client'
+import SavedPlanCard from "@/components/SavedPlanCard";
+import TodayPlanCard from "@/components/TodayPlanCard";
+import { FitLogContext } from "@/context/FitLogContext";
+import { Divide } from "lucide-react";
+import Link from "next/link";
+import React, { useContext, useState } from "react";
 
 const MyPlan = () => {
+    const context = useContext(FitLogContext)
+    const totalCaloriesBurned = context?.todayPlan.reduce((acc, dataPlan) => {
+        acc = acc + dataPlan.caloriesBurned
+        return acc
+    }, 0) ?? 0
+
+    const totalDuration = context?.todayPlan.reduce((acc, dataPlan) => {
+        acc = acc + dataPlan.duration
+        return acc
+    }, 0) ?? 0
+
+    const [activeTab, setActiveTab] = useState<'today' | 'saved'>('today')
+
     return (
         <main className=" text-white container mx-auto mt-[40px]">
 
@@ -27,7 +46,7 @@ const MyPlan = () => {
                         </p>
 
                         <p className="mt-2 text-[36px] font-extrabold leading-none text-[#B9FF00]">
-                            0
+                            {context?.todayPlan.length ?? 0}
                         </p>
                     </div>
 
@@ -38,7 +57,7 @@ const MyPlan = () => {
                         </p>
 
                         <p className="mt-2 text-[36px] font-extrabold leading-none">
-                            0
+                            {totalDuration}
                         </p>
                     </div>
 
@@ -49,7 +68,7 @@ const MyPlan = () => {
                         </p>
 
                         <p className="mt-2 text-[36px] font-extrabold leading-none">
-                            0
+                            {totalCaloriesBurned}
                         </p>
                     </div>
 
@@ -61,18 +80,26 @@ const MyPlan = () => {
             <section className="mt-6 flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
 
                 {/* Tabs */}
-                <div className="flex w-fit rounded-[15px] h-[40px] border border-[#252A35] bg-[#11141A] p-1">
+                <div className="flex w-fit rounded-[15px] h-[42px] border border-[#252A35] bg-[#11141A] p-[4px]">
                     <button
-                        className="rounded-[11px] w-[103px] h-[28px] text-[14px] text-[#9298A7]"
+                        onClick={() => setActiveTab('today')}
+                        className={`${activeTab === 'today'
+                            ? "rounded-[11px] border border-[#303642] bg-[#20242D] w-[108px] h-[30px]  text-[14px] font-semibold text-white shadow-sm"
+                            : "rounded-[11px] w-[103px] h-[28px] text-[14px] text-[#9298A7]"} 
+                            `}
                     >
                         Today’s Plan
                     </button>
-
                     <button
-                        className="rounded-[11px] border border-[#303642] bg-[#20242D] w-[108px] h-[30px]  text-[14px] font-semibold text-white shadow-sm"
+                        onClick={() => setActiveTab('saved')}
+                        className={`${activeTab === 'saved'
+                            ? "rounded-[11px] border border-[#303642] bg-[#20242D] w-[108px] h-[30px]  text-[14px] font-semibold text-white shadow-sm"
+                            : "rounded-[11px] w-[103px] h-[28px] text-[14px] text-[#9298A7]"} 
+                            `}
                     >
                         Saved
                     </button>
+
                 </div>
 
                 {/* Sort */}
@@ -107,25 +134,76 @@ const MyPlan = () => {
             </section>
 
             {/* Empty State */}
-            <section className="mt-4 flex h-[300px] items-center justify-center rounded-[18px] border border-dashed border-[#292E38] bg-[#0E1015] px-6">
-
-                <div className="flex flex-col items-center text-center">
-
-                    <h2 className="text-[20px] font-extrabold uppercase tracking-wide sm:text-3xl">
-                        NOTHING HERE YET
-                    </h2>
-
-                    <p className="mt-2 text-[12px] text-[#969BA8] sm:text-lg">
-                        Browse the library and add a lift to get today moving.
-                    </p>
 
 
-                    <button className="mt-6 rounded-full bg-[#B9FF00] px-6 py-2.5 text-[16px] font-semibold text-black shadow-[0_8px_25px_rgba(185,255,0,0.15)] transition hover:bg-[#c7ff29]">
-                        Go to workouts
-                    </button>
+            <section className="">
 
-                </div>
+                {activeTab === 'today' ? (context?.todayPlan.length === 0 ? (
+                    <div className="mt-4 rounded-[18px] border border-dashed border-[#292E38] bg-[#0E1015] px-6 flex flex-col items-center justify-center text-center h-[300px]">
 
+                        <h2 className="text-[20px] font-extrabold uppercase tracking-wide sm:text-3xl">
+                            NOTHING HERE YET
+                        </h2>
+
+                        <p className="mt-2 text-[12px] text-[#969BA8] sm:text-lg">
+                            Browse the library and add a lift to get today moving.
+                        </p>
+
+
+                        <Link href='/'>
+                            <button className="mt-6 rounded-full bg-[#B9FF00] px-6 py-2.5 text-[16px] font-semibold text-black shadow-[0_8px_25px_rgba(185,255,0,0.15)] transition hover:bg-[#c7ff29]">
+                                Go to workouts
+                            </button>
+                        </Link>
+
+                    </div>) :
+
+                    (<div className="flex flex-col gap-4 mt-6">
+
+                        {context?.todayPlan.map((today) => {
+                            return <TodayPlanCard key={today.id} today={today}></TodayPlanCard>
+                        })}
+
+                    </div>
+                    )
+
+                )
+
+
+
+                    : (context?.savedWorkouts.length === 0 ? (
+                        <div className="mt-4 rounded-[18px] border border-dashed border-[#292E38] bg-[#0E1015] px-6 flex flex-col items-center justify-center text-center h-[300px]">
+
+                            <h2 className="text-[20px] font-extrabold uppercase tracking-wide sm:text-3xl">
+                                NOTHING HERE YET
+                            </h2>
+
+                            <p className="mt-2 text-[12px] text-[#969BA8] sm:text-lg">
+                                Browse the library and add a lift to get today moving.
+                            </p>
+
+
+                            <Link href='/'>
+                                <button className="mt-6 rounded-full bg-[#B9FF00] px-6 py-2.5 text-[16px] font-semibold text-black shadow-[0_8px_25px_rgba(185,255,0,0.15)] transition hover:bg-[#c7ff29]">
+                                    Go to workouts
+                                </button>
+                            </Link>
+
+                        </div>) :
+
+                        (<div className="flex flex-col gap-4 mt-6">
+
+                            {context?.savedWorkouts.map((today) => {
+                                return <SavedPlanCard key={today.id} today={today}></SavedPlanCard>
+                            })}
+
+                        </div>
+                        )
+
+                    )
+
+
+                }
             </section>
 
         </main>
