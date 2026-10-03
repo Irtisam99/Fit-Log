@@ -1,6 +1,7 @@
 'use client';
 import { FitLogContext } from '@/context/FitLogContext';
 import React, { useContext } from 'react';
+import { toast } from 'react-toastify';
 
 const WorkoutActions = ({ workout }: { workout: libraryType }) => {
     const context = useContext(FitLogContext)
@@ -13,9 +14,12 @@ const WorkoutActions = ({ workout }: { workout: libraryType }) => {
         })
 
         if (alreadyAdded === false) {
+            toast.success("Added to Today's Plan!")
             context.setTodayPlan([...context.todayPlan, workout]);
-
+        } else {
+            toast.info("Workout is already in today's plan!");
         }
+
     }
     const handlerSaved = () => {
         if (!context) return;
@@ -25,8 +29,13 @@ const WorkoutActions = ({ workout }: { workout: libraryType }) => {
         });
 
         if (!alreadySaved) {
+            toast.success("Added to Today's Plan!")
             context.setSavedWorkouts([...context.savedWorkouts, workout]);
+
+        } else {
+            toast.info("Workout is already in today's plan!");
         }
+
     }
 
     return (
