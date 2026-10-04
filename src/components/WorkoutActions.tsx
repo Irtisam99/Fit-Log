@@ -29,11 +29,11 @@ const WorkoutActions = ({ workout }: { workout: libraryType }) => {
         });
 
         if (!alreadySaved) {
-            toast.success("Added to Today's Plan!")
+            toast.success("Added to Saved Plan!")
             context.setSavedWorkouts([...context.savedWorkouts, workout]);
 
         } else {
-            toast.info("Workout is already in today's plan!");
+            toast.info("Workout is already in Saved plan!");
         }
 
     }

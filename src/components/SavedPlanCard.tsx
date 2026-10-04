@@ -1,7 +1,12 @@
-import React from "react";
+'use client';
+import React, { useContext } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { FitLogContext } from "@/context/FitLogContext";
 
 const SavedPlanCard = ({ today }: { today: libraryType }) => {
+    const context=useContext(FitLogContext)
+
     return (
         <div className="flex h-[125px] w-full items-center rounded-[24px] border border-[#252A35] bg-[#13161D] px-[28px]">
 
@@ -108,28 +113,36 @@ const SavedPlanCard = ({ today }: { today: libraryType }) => {
             <div className="flex shrink-0 items-center gap-[8px]">
 
                 {/* View Details */}
-                <button className="h-[34px] rounded-full border border-[#344052] px-[25px] text-[12px] text-[#E5E7EB] transition hover:bg-[#1A1E26]">
-                    View Details
-                </button>
+                <Link href={`/workouts/${today.id}`}>
 
+                    <button className="h-[34px] rounded-full border border-[#344052] px-[25px] text-[12px] text-[#E5E7EB] transition hover:bg-[#1A1E26]">
+                        View Details
+                    </button>
+                </Link>
 
-                {/* Close */}
-                <button className="ml-[12px] text-[#687180] transition hover:text-white">
-                    <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M6 6L18 18M18 6L6 18"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                        />
-                    </svg>
-                </button>
+                    {/* Close */}
+                    <button 
+                    onClick={()=>{
+                        context?.setSavedWorkouts(
+                            context.savedWorkouts.filter((workout)=>workout.id!==today.id)
+                        )
+                    }}
+                    className="ml-[12px] text-[#687180] transition hover:text-white">
+                        <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M6 6L18 18M18 6L6 18"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                            />
+                        </svg>
+                    </button>
 
             </div>
 

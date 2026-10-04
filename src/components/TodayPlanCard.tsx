@@ -1,7 +1,14 @@
-import React from "react";
+'use client';
+import React, { useContext, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { FitLogContext } from "@/context/FitLogContext";
+import { toast } from "react-toastify";
 
 const TodayPlanCard = ({ today }: { today: libraryType }) => {
+    const context=useContext(FitLogContext);
+    const [done,setDone]=useState<'done'|'not-done'>('not-done')
+
     return (
         <div className="flex h-[125px] w-full items-center rounded-[24px] border border-[#252A35] bg-[#13161D] px-[28px]">
 
@@ -108,13 +115,25 @@ const TodayPlanCard = ({ today }: { today: libraryType }) => {
             <div className="flex shrink-0 items-center gap-[8px]">
 
                 {/* View Details */}
-                <button className="h-[34px] rounded-full border border-[#344052] px-[25px] text-[12px] text-[#E5E7EB] transition hover:bg-[#1A1E26]">
-                    View Details
-                </button>
-
+                <Link href={`/workouts/${today.id}`}>
+                    <button className="h-[34px] rounded-full border border-[#344052] px-[25px] text-[12px] text-[#E5E7EB] transition hover:bg-[#1A1E26]">
+                        View Details
+                    </button>
+                </Link>
                 {/* Mark as Done */}
-                <button className="flex h-[32px] items-center gap-[10px] rounded-full bg-[#B9FF00] px-[20px] text-[12px] font-semibold text-black transition hover:bg-[#C8FF38]">
+                <button 
+                onClick={()=>{
+                    setDone('done')
+                    toast.success('Workout Done')
+                }}
+                disabled={done==='done'}
+                className="flex h-[32px] items-center gap-[10px] rounded-full bg-[#B9FF00] px-[20px] text-[12px] font-semibold text-black transition hover:bg-[#C8FF38]"
+                >
+                    {done==='done'?
 
+                    <div>Done</div>
+                    :
+                    <>
                     <svg
                         width="22"
                         height="22"
@@ -132,10 +151,17 @@ const TodayPlanCard = ({ today }: { today: libraryType }) => {
                     </svg>
 
                     Mark as Done
+                    </>}
                 </button>
 
                 {/* Close */}
-                <button className="ml-[12px] text-[#687180] transition hover:text-white">
+                <button
+                    onClick={() => {
+                        context?.setTodayPlan(
+                            context.todayPlan.filter((workout) => workout.id !== today.id)
+                        )
+                    }}
+                    className="ml-[12px] text-[#687180] transition hover:text-white">
                     <svg
                         width="20"
                         height="20"
