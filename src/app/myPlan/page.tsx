@@ -8,12 +8,22 @@ import React, { useContext, useState } from "react";
 
 const MyPlan = () => {
     const context = useContext(FitLogContext)
-    const totalCaloriesBurned = context?.todayPlan.reduce((acc, dataPlan) => {
+    const totalCaloriesBurnedToday = context?.todayPlan.reduce((acc, dataPlan) => {
         acc = acc + dataPlan.caloriesBurned
         return acc
     }, 0) ?? 0
 
-    const totalDuration = context?.todayPlan.reduce((acc, dataPlan) => {
+    const totalDurationToday = context?.todayPlan.reduce((acc, dataPlan) => {
+        acc = acc + dataPlan.duration
+        return acc
+    }, 0) ?? 0
+
+    const totalCaloriesBurnedSaved = context?.savedWorkouts.reduce((acc, dataPlan) => {
+        acc = acc + dataPlan.caloriesBurned
+        return acc
+    }, 0) ?? 0
+
+    const totalDurationSaved = context?.savedWorkouts.reduce((acc, dataPlan) => {
         acc = acc + dataPlan.duration
         return acc
     }, 0) ?? 0
@@ -38,7 +48,7 @@ const MyPlan = () => {
 
     })
     const sortedSavedWorkouts = [...(context?.savedWorkouts ?? [])];
-    
+
     sortedSavedWorkouts.sort((a, b) => {
         if (sortBy === 'duration') {
             return b.duration - a.duration
@@ -70,42 +80,85 @@ const MyPlan = () => {
             {/* Statistics */}
             <section className="mt-6 h-[122px] rounded-[20px] border border-[#232732] bg-[#13161D] px-[32px] py-[24px]">
 
-                <div className="grid h-full grid-cols-3">
 
-                    {/* Exercises */}
-                    <div className="flex flex-col justify-center border-r border-[#232732]">
-                        <p className="text-[12px] text-[#8A92A0]">
-                            Exercises
-                        </p>
+                {activeTab === 'today' ?
+                    <div className="grid h-full grid-cols-3">
 
-                        <p className="mt-2 text-[36px] font-extrabold leading-none text-[#B9FF00]">
-                            {context?.todayPlan.length ?? 0}
-                        </p>
+                        {/* Exercises */}
+                        <div className="flex flex-col justify-center border-r border-[#232732]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Exercises
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none text-[#B9FF00]">
+                                {context?.todayPlan.length ?? 0}
+                            </p>
+                        </div>
+
+                        {/* Minutes */}
+                        <div className="flex flex-col justify-center border-r border-[#232732] pl-[32px]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Minutes
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none">
+                                {totalDurationToday}
+                            </p>
+                        </div>
+
+                        {/* Calories */}
+                        <div className="flex flex-col justify-center pl-[32px]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Calories
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none">
+                                {totalCaloriesBurnedToday}
+                            </p>
+                        </div>
+
+                    </div> 
+                    
+                    :
+
+                    <div className="grid h-full grid-cols-3">
+
+                        {/* Exercises */}
+                        <div className="flex flex-col justify-center border-r border-[#232732]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Exercises
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none text-[#B9FF00]">
+                                {context?.savedWorkouts.length ?? 0}
+                            </p>
+                        </div>
+
+                        {/* Minutes */}
+                        <div className="flex flex-col justify-center border-r border-[#232732] pl-[32px]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Minutes
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none">
+                                {totalDurationSaved}
+                            </p>
+                        </div>
+
+                        {/* Calories */}
+                        <div className="flex flex-col justify-center pl-[32px]">
+                            <p className="text-[12px] text-[#8A92A0]">
+                                Calories
+                            </p>
+
+                            <p className="mt-2 text-[36px] font-extrabold leading-none">
+                                {totalCaloriesBurnedSaved}
+                            </p>
+                        </div>
+
                     </div>
 
-                    {/* Minutes */}
-                    <div className="flex flex-col justify-center border-r border-[#232732] pl-[32px]">
-                        <p className="text-[12px] text-[#8A92A0]">
-                            Minutes
-                        </p>
-
-                        <p className="mt-2 text-[36px] font-extrabold leading-none">
-                            {totalDuration}
-                        </p>
-                    </div>
-
-                    {/* Calories */}
-                    <div className="flex flex-col justify-center pl-[32px]">
-                        <p className="text-[12px] text-[#8A92A0]">
-                            Calories
-                        </p>
-
-                        <p className="mt-2 text-[36px] font-extrabold leading-none">
-                            {totalCaloriesBurned}
-                        </p>
-                    </div>
-
-                </div>
+                }
 
             </section>
 
