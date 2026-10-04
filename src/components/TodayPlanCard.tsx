@@ -159,9 +159,12 @@ const TodayPlanCard = ({ today }: { today: libraryType }) => {
                     onClick={() => {
                         context?.setTodayPlan(
                             context.todayPlan.filter((workout) => workout.id !== today.id)
+                            
                         )
+                        toast.success('Removed from todays Plan')
                     }}
-                    className="ml-[12px] text-[#687180] transition hover:text-white">
+                    className="ml-[12px] text-[#687180] transition hover:text-white"
+                    >
                     <svg
                         width="20"
                         height="20"

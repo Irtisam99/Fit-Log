@@ -6,7 +6,9 @@ const Library = async () => {
     const data = await getApiData.json();
 
     return (
-        <div className='container mx-auto mt-[64px] px-4 sm:px-5 lg:px-0'>
+        <div 
+        id='library'
+        className='container mx-auto mt-[64px] px-4 sm:px-5 lg:px-0'>
             
             <h3 className='text-white font-bold text-[30px]'>
                 THE LIBRARY

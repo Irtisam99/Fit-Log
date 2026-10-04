@@ -3,6 +3,7 @@ import React, { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { FitLogContext } from "@/context/FitLogContext";
+import { toast } from "react-toastify";
 
 const SavedPlanCard = ({ today }: { today: libraryType }) => {
     const context=useContext(FitLogContext)
@@ -126,6 +127,7 @@ const SavedPlanCard = ({ today }: { today: libraryType }) => {
                         context?.setSavedWorkouts(
                             context.savedWorkouts.filter((workout)=>workout.id!==today.id)
                         )
+                        toast.success("Removed from Saved list")
                     }}
                     className="ml-[12px] text-[#687180] transition hover:text-white">
                         <svg

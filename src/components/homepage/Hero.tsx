@@ -20,9 +20,11 @@ const Hero = () => {
                         into <br className="hidden lg:block" /> today's plan, and watch the week's work add up.
                     </p>
 
-                    <button className="btn btn-primary bg-[#C2F800] text-black rounded-1xl text-xs">
+                    <a 
+                    href='#library'
+                    className="btn btn-primary bg-[#C2F800] text-black rounded-1xl text-xs">
                         BROWSE WORKOUTS
-                    </button>
+                    </a>
                 </div>
 
                 <div className='mt-8 lg:mt-0 ml-0 lg:ml-auto flex items-center justify-items-end'>

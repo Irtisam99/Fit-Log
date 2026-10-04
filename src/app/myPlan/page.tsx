@@ -20,6 +20,39 @@ const MyPlan = () => {
 
     const [activeTab, setActiveTab] = useState<'today' | 'saved'>('today')
 
+    const [sortBy, setSortBy] = useState<'duration' | 'calories' | 'rating'>('duration')
+
+    const sortedTodayPlan = [...(context?.todayPlan ?? [])];
+
+    sortedTodayPlan.sort((a, b) => {
+        if (sortBy === 'duration') {
+            return b.duration - a.duration
+        }
+        if (sortBy === 'calories') {
+            return b.caloriesBurned - a.caloriesBurned
+        }
+        if (sortBy === 'rating') {
+            return b.rating - a.rating
+        }
+        return 0
+
+    })
+    const sortedSavedWorkouts = [...(context?.savedWorkouts ?? [])];
+    
+    sortedSavedWorkouts.sort((a, b) => {
+        if (sortBy === 'duration') {
+            return b.duration - a.duration
+        }
+        if (sortBy === 'calories') {
+            return b.caloriesBurned - a.caloriesBurned
+        }
+        if (sortBy === 'rating') {
+            return b.rating - a.rating
+        }
+        return 0
+
+    })
+
     return (
         <main className=" text-white container mx-auto mt-[40px]">
 
@@ -114,11 +147,29 @@ const MyPlan = () => {
                             role="button"
                             className="btn m-1 bg-[#13161D] text-white hover:bg-[#1c212b] border border-[#232732] border-b-0 shadow-none text-[14px]"
                         >
-                            Duration ⬇️️
+                            {sortBy === 'duration' && 'Duration'}
+                            {sortBy === 'calories' && 'Calories'}
+                            {sortBy === 'rating' && 'Rating'}
+                            {' '}⬇️️
                         </div>
                         <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm text-black">
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 2</a></li>
+                            <li>
+                                <button onClick={() => setSortBy('duration')}>
+                                    Duration
+                                </button>
+
+                            </li>
+                            <li>
+                                <button onClick={() => setSortBy('calories')}>
+                                    Calories
+                                </button>
+                            </li>
+
+                            <li>
+                                <button onClick={() => setSortBy('rating')}>
+                                    Rating
+                                </button>
+                            </li>
                         </ul>
                     </div>
 
@@ -160,7 +211,7 @@ const MyPlan = () => {
 
                     (<div className="flex flex-col gap-4 mt-6">
 
-                        {context?.todayPlan.map((today) => {
+                        {sortedTodayPlan.map((today) => {
                             return <TodayPlanCard key={today.id} today={today}></TodayPlanCard>
                         })}
 
@@ -193,7 +244,7 @@ const MyPlan = () => {
 
                         (<div className="flex flex-col gap-4 mt-6">
 
-                            {context?.savedWorkouts.map((today) => {
+                            {sortedSavedWorkouts.map((today) => {
                                 return <SavedPlanCard key={today.id} today={today}></SavedPlanCard>
                             })}
 
